@@ -7,7 +7,13 @@ export const verificacionToken = (req:any, res:Response , next:NextFunction)=>{
 
     token.comprobarToken(userToken)
          .then(decode=>{
-             req.usuario = decode.id
+             req.body.usuario = decode.usuario
+             const tokenrefech = token.getToken({
+             _id: decode.id,
+             nombre:decode.nombre,
+             avatar:decode.avatar
+             })
+             req.body.tokenrefech = tokenrefech;
              next()
          })
          .catch(error=>{
